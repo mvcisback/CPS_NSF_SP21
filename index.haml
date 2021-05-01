@@ -2,7 +2,7 @@
 
 %html
   %head
-    %title BDD / BAIR Poster
+    %title NSF CPS PI Meeting
 
     %meta(charset="utf-8")/
     %meta(name="description" content="BDD / BAIR Poster Spring 2021.")/
@@ -19,96 +19,38 @@
     %img#seal(src="imgs/ucbseal_139_540.png")/
 
     %div#title
-      %h1 Entropic Control Improvisation for Prediction, Inference, and, Testing
+      %h1 Specifications from demonstrations; A Maximum Entropy Approach
       %div
         %ol
           %li <strong>Marcell Vazquez-Chanlatte</strong>
-          %li Sebastian Junges
-          %li Daniel J. Fremont
           %li Sanjit A. Seshia
+
+    %div#nsf-code
+      %p 
+        NSF Grant </br> #1545126
 
     %div#qr-codes
       %figure
         %img(src="imgs/cav.svg")/
         %figcaption CAV 20'.
-      %figure
-        %img(src="imgs/arxiv.svg")/
-        %figcaption SGs preprint.
 
   %main
-    %section#erci
-      %h1 Entropic Control Improvisation
+    %section#movitation
+      %h1 Motivating Example
 
-      %p
-        Given a dynamics model and horizon T, find a policy that satisfies:
+      %h2 What was the agent trying to do?
+      %figure
+        %figcaption
+          Consider an agent acting in the following stochastic grid
+          world.
 
-      %ol#constraints
-        %li#hard
-          %p <strong>Hard Constraint:</strong>
-          $$\Pr(\xi \in \psi) \geq 1$$
+        %img(src="imgs/enter_lava.svg")
 
-        %li#soft
-          %p
-            <strong>Soft Constraint:</strong> 
-
-          $$\Pr(\xi \in \varphi) \geq \mathbf{p}$$
-
-        %li#rand
-          %p
-            <strong>Causal Entropy Constraint:</strong>
-
-          $$H(\mathcal{A}_{1:T} \mid\mid \mathcal{S}_{1:T}) \geq \mathbf{h}$$
-
-      %ol
-        %li
-          Causal entropy (<strong>randomness</strong>) constraint ensures minimal bias.
-
-        %li
-          Natural trade off between performance <strong>p</strong> and
-          randomness <strong>h</strong>.
-
-    %section#applications
-      %h1 Applications
-
-      %div
-        %figure
-          %figcaption Prediction
-          %img(src="imgs/behavior_prediction.svg")/
-          %figcaption Given φ, predict agents next actions.
-
-        %figure
-          %figcaption Inference
-          %img(src="imgs/spec_inference.svg")/
-          %figcaption Given demonstrations, predict φ.
-
-        %figure
-          %figcaption Testing
-          %img(src="imgs/motivating_example.svg")/
-          %figcaption
-            Declaratively specify environment
-            for testing.
-      %p
-        In above settings, a biased policy is <strong>undesirable</strong>.
-
-    %section
-      %h1 Contributions
-      %ol
-        %li
-          Algorithm for learning temporal constraints from
-          <strong>unlabeled</strong>
-          demonstrations in Markov Decision Processes (CAV 20').
-
-        %li
-          Symbolic approach for representing MDPs and Stochastic Games
-          as <strong>Binary Decision Diagrams</strong> (CAV 20').
-
-        %li
-          Improvisation in stochastic games
-          which support arbitrary <strong>combinations</strong> of
-          probabilistic 🎲 and adversarial 👿 uncertainty (In submission).
+        %figcaption
+          <strong>Q: </strong>Did the agent intend to touch the <b>red</b> tile?
 
     %section#mdps
-      %h1 Improv in MDPs (CAV 20')
+      %h1 Technical Construction
 
       %p 
         <strong>Key Observation:</strong> Can think of soft constraint
@@ -155,52 +97,23 @@
       %p#spec-example
         φ = "Avoid Lava, eventually recharge, and don't recharge while wet."
 
-      
+    %section
+      %h1 Experiment
 
-    %section#sg
-      %h1 Improv in Stochastic Games (In Submission)
+      %div#demos
+        %figure
+          %img(src="imgs/demos.svg")/
 
-      %p
-        <strong>Motivation:</strong> Often want to handle combinations
-        of probabilistic 🎲 and adversarial 👿 uncertainty, i.e.,
-        Interval MDPs, 2 player MDPs, and model compression.
+        %div
+          %p Provided <strong>6</strong> unlabeled demonstrations.
+          %ol
+            %li Go to and stay at the <span class="outlined-text" style="color: #ffff00">yellow</span> tile.
+            %li Avoid <span class="outlined-text" style="color: #ff8b8b">red</span> tiles.
+            %li If you enter a <span class="outlined-text" style="color: #afafff">blue</span>, touch a <span class="outlined-text" style="color: sandybrown">brown</span> tile <strong>before</strong> recharging.
 
-      %ul#sg-qa
-        %li(data-marker="Q")
-          Is efficent improvisation synthesis possible?
+          %ul
+            %li A = {↑, ↓, ←, →}.
+            %li \(p = \frac{1}{32}\), slip and move ←.
 
-        %li(data-marker="A")
-          Yes! By <strong>recursive entropy matching</strong>.
-
-      %p Efficient via dynamic programming from leafs of BDD.
-
-      %ol#alg-sketch
-        %li Assume min entropy  👿.
-        %li Run MDP to find optimal <strong>h</strong>.
-        %li Plan to match <strong>h</strong>.
-        %li Approximate Pareto Front.
-
-      %figure#pareto
-        %img(src="imgs/pareto.png")/
-        %img(src="imgs/rationality.png")/
-
-      %ol
-        %li
-          Pareto Front allows for re-planning locally.
-          
-        %li
-          Resulting algorithm is efficient in practice.
-          
-      %figure#sg-figs
-        %img(src="imgs/bdd_size_by_horizon.svg")/
-        %img(src="imgs/pareto_solve_time.svg")/
-
-    %section#future-work
-      %h1 Future Work
-      %ol
-        %li Sampling based algorithms.
-        %li POMDPs.
-        %li Subset queries.
-        %li Dynamic Scenic Constraints.
 
   %footer
