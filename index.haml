@@ -35,22 +35,41 @@
         %figcaption CAV 20'.
 
   %main
-    %section#movitation
-      %h1 Motivating Example
+    %section#motivation
+      %h1 What was the agent trying to do?
 
-      %h2 What was the agent trying to do?
       %figure
-        %figcaption
-          Consider an agent acting in the following stochastic grid
-          world.
-
         %img(src="imgs/enter_lava.svg")
 
-        %figcaption
-          <strong>Q: </strong>Did the agent intend to touch the <b>red</b> tile?
+        %ul
+          %li <strong>Q: </strong>Did the agent intend to touch the <span class="outlined-text red">red</span> tile?
+
+    %section#problem
+      %h1 Problem Statement
+
+      %blockquote 
+        Given unlabeled demonstrations, learn a formal
+        specification that "explains" the teachers
+        behavior.
+
+    %section
+      %h1 Why not Rewards?
+      %img(src="imgs/reward_compose.png")/
+
+    %section#contributions
+      %h1 Contributions
+
+      %ol
+        %li
+          Robustly learn trace properties from
+          <strong>unlabeled</strong> demonstrations in Markov Decision
+          Processes.
+        %li
+          Symbolic approach for efficently representing Markov Decision Processes
+          as <strong>Binary Decision Diagrams</strong>.
 
     %section#mdps
-      %h1 Technical Construction
+      %h1 Symbolic Maximum Causal Entropy Likelihood Estimatation
 
       %p 
         <strong>Key Observation:</strong> Can think of soft constraint
@@ -78,7 +97,7 @@
             %img(src="imgs/mdp_circ_unrolled.svg")/
 
         %li
-          Can represent MDP with a Binary Decision Diagram:
+          <strong>Idea:</strong> Symbolically encode MDP as a Binary Decision Diagram:
           %figure#bdds
             %img(src="imgs/bdd.svg")/
             %img(src="imgs/bdd_cgraph.svg")/
@@ -98,22 +117,35 @@
         φ = "Avoid Lava, eventually recharge, and don't recharge while wet."
 
     %section
-      %h1 Experiment
+      %h1 Experiment: Learn rules given 6 <i>unlabeled</i> demos.
 
       %div#demos
         %figure
           %img(src="imgs/demos.svg")/
 
         %div
-          %p Provided <strong>6</strong> unlabeled demonstrations.
-          %ol
-            %li Go to and stay at the <span class="outlined-text" style="color: #ffff00">yellow</span> tile.
-            %li Avoid <span class="outlined-text" style="color: #ff8b8b">red</span> tiles.
-            %li If you enter a <span class="outlined-text" style="color: #afafff">blue</span>, touch a <span class="outlined-text" style="color: sandybrown">brown</span> tile <strong>before</strong> recharging.
+          %h3 Dynamics
+          %ul#dynamics
+            %li Actions = {↑, ↓, ←, →}.
+            %li Probability  \(\frac{1}{32}\)  to slip and move ←.
 
-          %ul
-            %li A = {↑, ↓, ←, →}.
-            %li \(p = \frac{1}{32}\), slip and move ←.
+          %h3 Rules
+          %ol#rules
+            %li Go to and stay at the <span class="outlined-text yellow" >yellow</span> tile.
+            %li Avoid <span class="outlined-text red">red</span> tiles.
+            %li If you enter a <span class="outlined-text blue">blue</span>, touch a <span class="outlined-text brown">brown</span> tile <strong>before</strong> recharging.
+
+      <table> <tbody> <tr class="odd"> <td>Spec</td> <td>Policy Size</td> <td>ROBDD</td> <td>Relative Log Likelihood</td> </tr> <tr class="even"> <td></td> <td>(#nodes)</td> <td>build time</td> <td>(Compared to True)</td> </tr> <tr class="odd"> <td>true</td> <td>1</td> <td>0.48s</td> <td>0</td>  <tr class="even"> <td><span class="math inline"><em>φ</em><sub>1</sub>&nbsp;=&nbsp;rule 1</span></td> <td>1628</td> <td>1.2s</td> <td>5</td> </tr> </tr> <tr class="odd"> <td><span class="math inline"><em>φ</em><sub>2</sub>&nbsp;=&nbsp;rule 2</span></td> <td>1797</td> <td>1.5s</td> <td>-22</td> </tr> <tr class="even"> <td><span class="math inline"><em>φ</em><sub>3</sub>&nbsp;=&nbsp;rule 3</span></td> <td>750</td> <td>1.6s</td> <td>-10</td> </tr> <tr class="odd"> <td><span class="math inline"><em>φ</em><sub>4</sub> = <em>φ</em><sub>1</sub> ∧ <em>φ</em><sub>2</sub></span></td> <td>523</td> <td>1.9s</td> <td>4</td> </tr> <tr class="even"> <td><span class="math inline"><em>φ</em><sub>5</sub> = <em>φ</em><sub>1</sub> ∧ <em>φ</em><sub>3</sub></span></td> <td>1913</td> <td>1.5s</td> <td>-2</td> </tr> <tr class="odd"> <td><span class="math inline"><em>φ</em><sub>6</sub> = <em>φ</em><sub>2</sub> ∧ <em>φ</em><sub>3</sub></span></td> <td>1842</td> <td>2s</td> <td>15</td> </tr> <tr class="even"> <td><span class="math inline"><em>φ</em><sub>⋆</sub> = <em>φ</em><sub>1</sub> ∧ <em>φ</em><sub>2</sub> ∧ <em>φ</em><sub>3</sub></span></td> <td>577</td> <td>1.6</td> <td>27</td> </tr></tbody> </table>
+
+      <p><strong>Key observation:</strong> \(\varphi_*\) more likely than consistent specifications.</p>
+
+    %section
+      %h1 Future Work
+      %ol
+        %li Teaching through demonstrations.
+        %li Inference in continuous domains.
+        %li Data driven concept classes - Natural Language Processing, Sampling consistent automata, etc.
+        %li Estimating Membership Queries: Is a given behavior is ok?
 
 
   %footer

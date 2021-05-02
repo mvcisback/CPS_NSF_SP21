@@ -127,6 +127,8 @@ main p {
 }
 
 
+
+
 #mdps figure {
     display: flex;
     justify-content: space-between;
@@ -278,5 +280,88 @@ figure {
 
 .outlined-text {
     -webkit-text-stroke-color: black;
-    -webkit-text-stroke-width: 0.8px;
+    -webkit-text-stroke-width: 2px;
+    font-weight: 800;
+}
+
+.outlined-text.yellow {
+    color: #ffff00;
+}
+
+.outlined-text.red {
+    color: #ff8b8b;
+}
+
+.outlined-text.blue {
+    color: #afafff;
+}
+
+.outlined-text.brown {
+    color: sandybrown;
+}
+
+
+table {
+    font-size: 0.8em;
+    margin: 0.1em;
+    border: solid black 5px;
+    padding: 0.5em;
+}
+
+table .even {
+    background: #e8e8e8;
+}
+
+
+td {
+    width: 25%;
+}
+
+
+#motivation figure {
+    display: flex;
+    flex-direction: column;
+}
+
+#motivation figure img {
+    margin: 1em;
+    height: 2.8in;
+}
+
+#motivation ul {
+    list-style: none;
+    margin-left: 0.5in;
+}
+
+
+#demos h3 {
+    text-align: center;
+    margin: 0.3em 0;
+    padding: 0;
+    text-decoration: underline;
+}
+
+
+#demos ul#dynamics {
+    list-style: none;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+#demos ol#rules {
+    padding-right: 0;
+    margin-right: 0.1em;
+    margin-left: 1in;
+}
+
+
+#problem blockquote {
+    background: var(--grey);
+    color: black;
+    padding: 1em;
+
+    width: 80%;
+    border: 8px solid black;
+    margin-bottom: 0.2em;
 }
